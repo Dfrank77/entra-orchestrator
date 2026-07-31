@@ -24,9 +24,7 @@ All three scanners write findings in a shared schema ([entra-security-report](ht
 
 ## Example output
 
-Okta-Provisioning-01 [critical] — Holds RoleManagement.ReadWrite.Directory, owned by a user who inherits Application Administrator via group membership.
-
-The workload scanner flagged the app. The attack-path scanner flagged the user. Only the join reveals that the user who can be escalated to Application Administrator owns an app that can rewrite directory roles.
+![Orchestrator correlation report](docs/Entra_Orchestrator_Report.jpeg)
 
 ## Usage
 
