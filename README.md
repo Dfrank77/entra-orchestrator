@@ -1,6 +1,6 @@
 # entra-orchestrator
 
-⚠️ Under active development. Core correlation works; HTML reporting and live scan orchestration are in progress.
+> **Under active development.** Core correlation works; HTML reporting and live scan orchestration are in progress.
 
 Cross-tool correlation for the Entra ID security suite. Reads findings from three independent scanners and surfaces risks that no single tool can see on its own.
 
@@ -18,14 +18,47 @@ The orchestrator answers it by joining findings across tools.
 
 ## How
 
-All three scanners write findings in a shared schema ([entra-security-report](https://github.com/Dfrank77/entra-security-report)) to a common store. The orchestrator reads that store and correlates:
+All three scanners write findings in a shared schema ([entra-security-report](https://github.com/Dfrank77/entra-security-report)) to a common store. The orchestrator reads that store and runs two correlations:
 
 **Ownership join** — for every over-privileged application, resolve its owners and check whether any owner is a user the attack-path scanner flags as having a privilege escalation path. Where they match, the dangerous app is owned by a compromisable identity: a real attack chain that neither tool reports alone.
 
+**Over-privileged and unowned** — over-privileged applications with no owner at all. No accountable party, harder to govern, and a standing escalation target. The workload scanner flags the privilege and the missing owner separately; the orchestrator surfaces the dangerous combination.
+
 ## Example output
+
+The report renders each correlation as a visual chain — the dangerous app, its risky owner, and the owner's escalation path shown as steps — so the relationship is obvious at a glance.
 
 ![Orchestrator correlation report](docs/Entra_Orchestrator_Report.jpeg)
 
+## Setup
+
+The orchestrator depends on the shared entra_security_report library, a local sibling repo rather than a PyPI package.
+
+    git clone https://github.com/Dfrank77/entra-security-report.git
+    git clone https://github.com/Dfrank77/entra-orchestrator.git
+    cd entra-orchestrator
+    python3 -m venv venv && source venv/bin/activate
+    pip install -e ../entra-security-report
+
+On Python 3.14, if the editable install is skipped (a known setuptools .pth issue), point the venv at the source directly instead:
+
+    export PYTHONPATH="/absolute/path/to/entra-security-report/src:$PYTHONPATH"
+
 ## Usage
 
-Requires the shared store populated by the three scanners (set \`ENTRA_FINDINGS_DIR\` and run each scanner), plus the shared \`entra_security_report\` library on the path. Then run \`python correlate.py\`.
+1. Point every tool at one shared findings store:
+
+       export ENTRA_FINDINGS_DIR="$HOME/.entra-findings"
+
+2. Run each of the three scanners (with that variable set) so their findings land in the shared store.
+
+3. Run the correlation and open the report:
+
+       python correlate.py
+       open orchestrator_report.html
+
+## Roadmap
+
+- Live orchestration: run all three scanners and correlate from a single command.
+- Remediation guidance per finding.
+- Additional correlation types (expiring-credential + over-privileged, PIM-eligible ownership).
