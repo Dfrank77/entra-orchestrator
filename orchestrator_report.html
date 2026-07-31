@@ -107,7 +107,7 @@ h2.section {
 <h1>Entra Orchestrator</h1>
 <p class="subtitle">Cross-tool correlation across the Entra ID security suite</p>
 <p class="tenant">Tenant ...d9a5aaef7304</p>
-<p class="ts">2026-07-31 13:57 UTC</p>
+<p class="ts">2026-07-31 14:39 UTC</p>
 <div class="summary">
   <div class="headline"><span class="n">10</span><span class="l">apps controlled by a compromisable identity</span></div>
   <div class="crit"><span class="n">4</span><span class="l">critical</span></div>
@@ -127,19 +127,19 @@ h2.section {
         <span class="badge sev-critical">critical</span>
         <span class="app-name">Okta-Provisioning-01</span>
         <span class="perm-tag">RoleManagement.ReadWrite.Directory</span>
-        <span class="path-count">1 escalation path</span>
+        <span class="path-count">2 escalation paths</span>
       </div>
       <div class="consequence">can escalate to full tenant control</div>
-      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Omar Delgado</div><div class="path"><span class="step">Omar Delgado</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Omar Delgado</div><div class="path"><span class="step">Omar Delgado</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div><div class="path"><span class="step">Omar Delgado</span><span class="arrow">&rarr;</span><span class="step">SG-IT-Admins</span><span class="arrow">&rarr;</span><span class="step role">Helpdesk Administrator</span></div></div></div>
     </div><div class="card sev-critical">
       <div class="headline-row">
         <span class="badge sev-critical">critical</span>
-        <span class="app-name">Okta-Provisioning-04</span>
+        <span class="app-name">Okta-Provisioning-02</span>
         <span class="perm-tag">RoleManagement.ReadWrite.Directory</span>
-        <span class="path-count">1 escalation path</span>
+        <span class="path-count">2 escalation paths</span>
       </div>
       <div class="consequence">can escalate to full tenant control</div>
-      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Pablo Banerjee</div><div class="path"><span class="step">Pablo Banerjee</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Omar Eze</div><div class="path"><span class="step">Omar Eze</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div><div class="path"><span class="step">Omar Eze</span><span class="arrow">&rarr;</span><span class="step">SG-IT-Admins</span><span class="arrow">&rarr;</span><span class="step role">Helpdesk Administrator</span></div></div></div>
     </div><div class="card sev-critical">
       <div class="headline-row">
         <span class="badge sev-critical">critical</span>
@@ -152,12 +152,12 @@ h2.section {
     </div><div class="card sev-critical">
       <div class="headline-row">
         <span class="badge sev-critical">critical</span>
-        <span class="app-name">Okta-Provisioning-02</span>
+        <span class="app-name">Okta-Provisioning-04</span>
         <span class="perm-tag">RoleManagement.ReadWrite.Directory</span>
-        <span class="path-count">1 escalation path</span>
+        <span class="path-count">2 escalation paths</span>
       </div>
       <div class="consequence">can escalate to full tenant control</div>
-      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Omar Eze</div><div class="path"><span class="step">Omar Eze</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Pablo Banerjee</div><div class="path"><span class="step">Pablo Banerjee</span><span class="arrow">&rarr;</span><span class="step">SG-SharePoint-Admins</span><span class="arrow">&rarr;</span><span class="step role">SharePoint Administrator</span></div><div class="path"><span class="step">Pablo Banerjee</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
     </div><div class="card sev-high">
       <div class="headline-row">
         <span class="badge sev-high">high</span>
@@ -170,15 +170,6 @@ h2.section {
     </div><div class="card sev-high">
       <div class="headline-row">
         <span class="badge sev-high">high</span>
-        <span class="app-name">Veeam-Backup-05</span>
-        <span class="perm-tag">Mail.Read</span>
-        <span class="path-count">1 escalation path</span>
-      </div>
-      <div class="consequence">Holds Mail.Read tenant-wide</div>
-      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Pablo Chen</div><div class="path"><span class="step">Pablo Chen</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
-    </div><div class="card sev-high">
-      <div class="headline-row">
-        <span class="badge sev-high">high</span>
         <span class="app-name">Veeam-Backup-06</span>
         <span class="perm-tag">Mail.Read</span>
         <span class="path-count">1 escalation path</span>
@@ -188,53 +179,46 @@ h2.section {
     </div><div class="card sev-high">
       <div class="headline-row">
         <span class="badge sev-high">high</span>
-        <span class="app-name">Veeam-Backup-01</span>
-        <span class="perm-tag">Mail.Read</span>
-        <span class="path-count">1 escalation path</span>
-      </div>
-      <div class="consequence">Holds Mail.Read tenant-wide</div>
-      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Omar Delgado</div><div class="path"><span class="step">Omar Delgado</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
-    </div><div class="card sev-high">
-      <div class="headline-row">
-        <span class="badge sev-high">high</span>
         <span class="app-name">Veeam-Backup-04</span>
         <span class="perm-tag">Mail.Read</span>
-        <span class="path-count">1 escalation path</span>
+        <span class="path-count">2 escalation paths</span>
       </div>
       <div class="consequence">Holds Mail.Read tenant-wide</div>
-      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Pablo Banerjee</div><div class="path"><span class="step">Pablo Banerjee</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Pablo Banerjee</div><div class="path"><span class="step">Pablo Banerjee</span><span class="arrow">&rarr;</span><span class="step">SG-SharePoint-Admins</span><span class="arrow">&rarr;</span><span class="step role">SharePoint Administrator</span></div><div class="path"><span class="step">Pablo Banerjee</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
     </div><div class="card sev-high">
       <div class="headline-row">
         <span class="badge sev-high">high</span>
         <span class="app-name">Veeam-Backup-02</span>
         <span class="perm-tag">Mail.Read</span>
-        <span class="path-count">1 escalation path</span>
+        <span class="path-count">2 escalation paths</span>
       </div>
       <div class="consequence">Holds Mail.Read tenant-wide</div>
-      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Omar Eze</div><div class="path"><span class="step">Omar Eze</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Omar Eze</div><div class="path"><span class="step">Omar Eze</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div><div class="path"><span class="step">Omar Eze</span><span class="arrow">&rarr;</span><span class="step">SG-IT-Admins</span><span class="arrow">&rarr;</span><span class="step role">Helpdesk Administrator</span></div></div></div>
+    </div><div class="card sev-high">
+      <div class="headline-row">
+        <span class="badge sev-high">high</span>
+        <span class="app-name">Veeam-Backup-01</span>
+        <span class="perm-tag">Mail.Read</span>
+        <span class="path-count">2 escalation paths</span>
+      </div>
+      <div class="consequence">Holds Mail.Read tenant-wide</div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Omar Delgado</div><div class="path"><span class="step">Omar Delgado</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div><div class="path"><span class="step">Omar Delgado</span><span class="arrow">&rarr;</span><span class="step">SG-IT-Admins</span><span class="arrow">&rarr;</span><span class="step role">Helpdesk Administrator</span></div></div></div>
+    </div><div class="card sev-high">
+      <div class="headline-row">
+        <span class="badge sev-high">high</span>
+        <span class="app-name">Veeam-Backup-05</span>
+        <span class="perm-tag">Mail.Read</span>
+        <span class="path-count">2 escalation paths</span>
+      </div>
+      <div class="consequence">Holds Mail.Read tenant-wide</div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Pablo Chen</div><div class="path"><span class="step">Pablo Chen</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div><div class="path"><span class="step">Pablo Chen</span><span class="arrow">&rarr;</span><span class="step">SG-Executives</span><span class="arrow">&rarr;</span><span class="step role">Privileged Authentication Administrator</span></div></div></div>
     </div>
 
 <h2 class="section">Over-privileged and unowned</h2>
 <div class="card unowned sev-high">
       <div class="headline-row">
         <span class="badge sev-high">high</span>
-        <span class="app-name">LegacyDocSync-01</span>
-        <span class="perm-tag">Files.Read.All</span>
-        <span class="path-count">no owner</span>
-      </div>
-      <div class="consequence">Over-privileged and unaccountable &mdash; no owner assigned.</div>
-    </div><div class="card unowned sev-high">
-      <div class="headline-row">
-        <span class="badge sev-high">high</span>
-        <span class="app-name">LegacyDocSync-02</span>
-        <span class="perm-tag">Files.Read.All</span>
-        <span class="path-count">no owner</span>
-      </div>
-      <div class="consequence">Over-privileged and unaccountable &mdash; no owner assigned.</div>
-    </div><div class="card unowned sev-high">
-      <div class="headline-row">
-        <span class="badge sev-high">high</span>
-        <span class="app-name">LegacyDocSync-05</span>
+        <span class="app-name">LegacyDocSync-04</span>
         <span class="perm-tag">Files.Read.All</span>
         <span class="path-count">no owner</span>
       </div>
@@ -258,7 +242,23 @@ h2.section {
     </div><div class="card unowned sev-high">
       <div class="headline-row">
         <span class="badge sev-high">high</span>
-        <span class="app-name">LegacyDocSync-04</span>
+        <span class="app-name">LegacyDocSync-01</span>
+        <span class="perm-tag">Files.Read.All</span>
+        <span class="path-count">no owner</span>
+      </div>
+      <div class="consequence">Over-privileged and unaccountable &mdash; no owner assigned.</div>
+    </div><div class="card unowned sev-high">
+      <div class="headline-row">
+        <span class="badge sev-high">high</span>
+        <span class="app-name">LegacyDocSync-02</span>
+        <span class="perm-tag">Files.Read.All</span>
+        <span class="path-count">no owner</span>
+      </div>
+      <div class="consequence">Over-privileged and unaccountable &mdash; no owner assigned.</div>
+    </div><div class="card unowned sev-high">
+      <div class="headline-row">
+        <span class="badge sev-high">high</span>
+        <span class="app-name">LegacyDocSync-05</span>
         <span class="perm-tag">Files.Read.All</span>
         <span class="path-count">no owner</span>
       </div>
