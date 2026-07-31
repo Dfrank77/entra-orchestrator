@@ -133,5 +133,5 @@ if __name__ == "__main__":
                     print(f"        - {pf.title}")
 
     from report import render_report
-    _out = render_report(owned_privileged_apps(), ownerless_privileged_apps())
+    _out = render_report(owned_privileged_apps(), ownerless_privileged_apps(), tenant_id="e5e2596b-f25e-4c40-9504-d9a5aaef7304")
     print(f"\nReport written to {_out}")

@@ -7,206 +7,262 @@
   --text: #0f172a; --muted: #64748b;
   --sev-critical: #ff0000; --bg-critical: #ffb3b3;
   --sev-high:     #ff7a00; --bg-high:     #ffcc99;
-  --step-bg: #ffffff; --step-border: #e5e7eb;
+  --zone: rgba(255,255,255,0.55);
+  --step-bg: #ffffff; --step-border: #d9dee5;
 }
 * { box-sizing: border-box; }
 body {
   margin: 0; background: var(--bg); color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  line-height: 1.5;
+  line-height: 1.45;
 }
 main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem; }
 h1 { font-size: 1.9rem; margin: 0 0 .25rem; }
 h2.section {
-  font-size: 1.15rem; margin: 2.5rem 0 1rem; padding-bottom: .4rem;
+  font-size: 1.15rem; margin: 2.25rem 0 1rem; padding-bottom: .4rem;
   border-bottom: 1px solid var(--border);
 }
 .subtitle { color: var(--muted); margin: 0; }
-.ts { color: var(--muted); font-size: .85rem; margin: .1rem 0 2rem; }
+.tenant { color: var(--muted); font-size: .9rem; margin: .15rem 0 0; font-family: ui-monospace, Menlo, monospace; }
+.ts { color: var(--muted); font-size: .85rem; margin: .1rem 0 1.5rem; }
 
+/* summary */
 .summary {
   background: var(--card); border: 1px solid var(--border); border-radius: 12px;
   padding: 1.25rem 1.5rem; margin-bottom: 1rem;
   display: flex; gap: 2.5rem; align-items: baseline; flex-wrap: wrap;
 }
 .summary .n { font-size: 1.75rem; font-weight: 700; display: block; line-height: 1; }
-.summary .l { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.summary .l { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
 .summary .headline { padding-right: 2.5rem; border-right: 1px solid var(--border); }
 .summary .headline .n { font-size: 2.1rem; }
 .summary .crit .n { color: var(--sev-critical); }
 .summary .high .n { color: var(--sev-high); }
 
+/* legend */
+.legend {
+  display: flex; gap: 1.5rem; flex-wrap: wrap; align-items: center;
+  font-size: .78rem; color: var(--muted); margin: 0 0 2rem; padding: .6rem .9rem;
+  background: #fafafa; border: 1px solid var(--border); border-radius: 8px;
+}
+.legend .item { display: flex; align-items: center; gap: .4rem; }
+.legend .dot { width: .7rem; height: .7rem; border-radius: 3px; display: inline-block; }
+.legend .dot.crit { background: var(--sev-critical); }
+.legend .dot.high { background: var(--sev-high); }
+.legend .arrow { font-weight: 700; color: var(--text); }
+
+/* cards */
 .card {
   background: var(--card); border: 1px solid var(--border);
   border-left: 6px solid var(--sev-critical); border-radius: 12px;
-  padding: 1.25rem 1.5rem; margin-bottom: 1.5rem;
+  padding: 1rem 1.25rem; margin-bottom: 1.1rem;
 }
 .card.sev-critical { background: var(--bg-critical); border-left-color: var(--sev-critical); }
 .card.sev-high     { background: var(--bg-high);     border-left-color: var(--sev-high); }
 
-.card-app { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+/* tier 1: headline */
+.headline-row { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; }
 .badge {
-  color: #fff; font-size: .7rem; font-weight: 700; letter-spacing: .05em;
-  padding: .2rem .55rem; border-radius: 999px; text-transform: uppercase;
+  color: #fff; font-size: .68rem; font-weight: 700; letter-spacing: .05em;
+  padding: .18rem .5rem; border-radius: 999px; text-transform: uppercase;
 }
 .badge.sev-critical { background: var(--sev-critical); }
 .badge.sev-high     { background: var(--sev-high); }
-.app-name { font-size: 1.2rem; font-weight: 700; }
-.app-perm { color: #334155; font-family: ui-monospace, Menlo, monospace; font-size: .85rem; }
-.app-detail { color: #334155; font-size: .9rem; margin: .35rem 0 0; }
-
-.owner {
-  margin-left: 1rem; padding-left: 1.25rem;
-  border-left: 2px solid rgba(0,0,0,0.25); margin-top: 1.1rem;
+.app-name { font-size: 1.15rem; font-weight: 700; }
+.perm-tag {
+  font-family: ui-monospace, Menlo, monospace; font-size: .76rem;
+  background: rgba(0,0,0,0.07); padding: .12rem .45rem; border-radius: 5px;
+  color: #1e293b;
 }
-.owner-head { font-weight: 600; margin-bottom: .5rem; }
-.owner-note { color: #475569; font-size: .85rem; font-weight: 400; }
+.path-count {
+  margin-left: auto; font-size: .72rem; color: #475569;
+  background: rgba(255,255,255,0.7); border: 1px solid var(--step-border);
+  padding: .15rem .55rem; border-radius: 999px; white-space: nowrap;
+}
 
-.path { display: flex; align-items: center; flex-wrap: wrap; gap: .4rem; margin: .35rem 0; }
+/* tier 2: consequence */
+.consequence { color: #334155; font-size: .85rem; margin: .3rem 0 0; }
+
+/* tier 3: chain zone */
+.chain-zone {
+  background: var(--zone); border-radius: 8px; padding: .75rem .9rem;
+  margin-top: .75rem;
+}
+.owner + .owner { margin-top: .7rem; padding-top: .7rem; border-top: 1px dashed var(--step-border); }
+.owner-head { font-weight: 600; font-size: .9rem; margin-bottom: .4rem; }
+.path { display: flex; align-items: center; flex-wrap: wrap; gap: .35rem; }
 .step {
   background: var(--step-bg); border: 1px solid var(--step-border);
-  border-radius: 6px; padding: .3rem .6rem; font-size: .85rem; white-space: nowrap;
+  border-radius: 6px; padding: .28rem .55rem; font-size: .82rem; white-space: nowrap;
 }
-.step.role { font-weight: 600; }
-.arrow { color: #475569; font-size: .9rem; }
+.step.role { font-weight: 700; }
+.arrow { color: #475569; font-weight: 700; font-size: .85rem; }
 
-.unowned-note { color: #475569; font-size: .9rem; margin-top: .5rem; font-style: italic; }
-.empty { color: var(--muted); padding: 1.5rem; }
+/* unowned cards: lighter, no chain */
+.card.unowned { padding: .7rem 1.25rem; }
+.card.unowned .consequence { margin-top: .2rem; font-style: italic; }
+
+.empty { color: var(--muted); padding: 1.25rem; }
 </style></head><body><main>
 <h1>Entra Orchestrator</h1>
 <p class="subtitle">Cross-tool correlation across the Entra ID security suite</p>
-<p class="ts">2026-07-30 17:20 UTC</p>
+<p class="tenant">Tenant ...d9a5aaef7304</p>
+<p class="ts">2026-07-31 13:57 UTC</p>
 <div class="summary">
   <div class="headline"><span class="n">10</span><span class="l">apps controlled by a compromisable identity</span></div>
   <div class="crit"><span class="n">4</span><span class="l">critical</span></div>
   <div class="high"><span class="n">12</span><span class="l">high</span></div>
   <div><span class="n">6</span><span class="l">over-privileged &amp; unowned</span></div>
 </div>
+<div class="legend">
+      <span class="item"><span class="dot crit"></span> critical</span>
+      <span class="item"><span class="dot high"></span> high</span>
+      <span class="item"><span class="arrow">&rarr;</span> escalation step (user &rarr; group &rarr; role)</span>
+      <span class="item">"owned by" = app owner who can be compromised</span>
+    </div>
 
 <h2 class="section">Controlled by compromisable identities</h2>
-<div class="card sev-critical"><div class="card-app">
+<div class="card sev-critical">
+      <div class="headline-row">
         <span class="badge sev-critical">critical</span>
         <span class="app-name">Okta-Provisioning-01</span>
-        <span class="app-perm">RoleManagement.ReadWrite.Directory</span>
+        <span class="perm-tag">RoleManagement.ReadWrite.Directory</span>
+        <span class="path-count">1 escalation path</span>
       </div>
-      <div class="app-detail">Holds RoleManagement.ReadWrite.Directory: can escalate to full tenant control</div><div class="owner">
-      <div class="owner-head">owned by Omar Delgado
-        <span class="owner-note">&mdash; 1 escalation path</span></div>
-      <div class="path"><span class="step">Omar Delgado</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div>
-    </div></div><div class="card sev-critical"><div class="card-app">
+      <div class="consequence">can escalate to full tenant control</div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Omar Delgado</div><div class="path"><span class="step">Omar Delgado</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
+    </div><div class="card sev-critical">
+      <div class="headline-row">
         <span class="badge sev-critical">critical</span>
         <span class="app-name">Okta-Provisioning-04</span>
-        <span class="app-perm">RoleManagement.ReadWrite.Directory</span>
+        <span class="perm-tag">RoleManagement.ReadWrite.Directory</span>
+        <span class="path-count">1 escalation path</span>
       </div>
-      <div class="app-detail">Holds RoleManagement.ReadWrite.Directory: can escalate to full tenant control</div><div class="owner">
-      <div class="owner-head">owned by Pablo Banerjee
-        <span class="owner-note">&mdash; 1 escalation path</span></div>
-      <div class="path"><span class="step">Pablo Banerjee</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div>
-    </div></div><div class="card sev-critical"><div class="card-app">
+      <div class="consequence">can escalate to full tenant control</div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Pablo Banerjee</div><div class="path"><span class="step">Pablo Banerjee</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
+    </div><div class="card sev-critical">
+      <div class="headline-row">
         <span class="badge sev-critical">critical</span>
         <span class="app-name">Okta-Provisioning-03</span>
-        <span class="app-perm">RoleManagement.ReadWrite.Directory</span>
+        <span class="perm-tag">RoleManagement.ReadWrite.Directory</span>
+        <span class="path-count">1 escalation path</span>
       </div>
-      <div class="app-detail">Holds RoleManagement.ReadWrite.Directory: can escalate to full tenant control</div><div class="owner">
-      <div class="owner-head">owned by Pablo Alvarez
-        <span class="owner-note">&mdash; 1 escalation path</span></div>
-      <div class="path"><span class="step">Pablo Alvarez</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div>
-    </div></div><div class="card sev-critical"><div class="card-app">
+      <div class="consequence">can escalate to full tenant control</div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Pablo Alvarez</div><div class="path"><span class="step">Pablo Alvarez</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
+    </div><div class="card sev-critical">
+      <div class="headline-row">
         <span class="badge sev-critical">critical</span>
         <span class="app-name">Okta-Provisioning-02</span>
-        <span class="app-perm">RoleManagement.ReadWrite.Directory</span>
+        <span class="perm-tag">RoleManagement.ReadWrite.Directory</span>
+        <span class="path-count">1 escalation path</span>
       </div>
-      <div class="app-detail">Holds RoleManagement.ReadWrite.Directory: can escalate to full tenant control</div><div class="owner">
-      <div class="owner-head">owned by Omar Eze
-        <span class="owner-note">&mdash; 1 escalation path</span></div>
-      <div class="path"><span class="step">Omar Eze</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div>
-    </div></div><div class="card sev-high"><div class="card-app">
+      <div class="consequence">can escalate to full tenant control</div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Omar Eze</div><div class="path"><span class="step">Omar Eze</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
+    </div><div class="card sev-high">
+      <div class="headline-row">
         <span class="badge sev-high">high</span>
         <span class="app-name">Veeam-Backup-03</span>
-        <span class="app-perm">Mail.Read</span>
+        <span class="perm-tag">Mail.Read</span>
+        <span class="path-count">1 escalation path</span>
       </div>
-      <div class="app-detail">Holds Mail.Read tenant-wide</div><div class="owner">
-      <div class="owner-head">owned by Pablo Alvarez
-        <span class="owner-note">&mdash; 1 escalation path</span></div>
-      <div class="path"><span class="step">Pablo Alvarez</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div>
-    </div></div><div class="card sev-high"><div class="card-app">
+      <div class="consequence">Holds Mail.Read tenant-wide</div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Pablo Alvarez</div><div class="path"><span class="step">Pablo Alvarez</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
+    </div><div class="card sev-high">
+      <div class="headline-row">
         <span class="badge sev-high">high</span>
         <span class="app-name">Veeam-Backup-05</span>
-        <span class="app-perm">Mail.Read</span>
+        <span class="perm-tag">Mail.Read</span>
+        <span class="path-count">1 escalation path</span>
       </div>
-      <div class="app-detail">Holds Mail.Read tenant-wide</div><div class="owner">
-      <div class="owner-head">owned by Pablo Chen
-        <span class="owner-note">&mdash; 1 escalation path</span></div>
-      <div class="path"><span class="step">Pablo Chen</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div>
-    </div></div><div class="card sev-high"><div class="card-app">
+      <div class="consequence">Holds Mail.Read tenant-wide</div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Pablo Chen</div><div class="path"><span class="step">Pablo Chen</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
+    </div><div class="card sev-high">
+      <div class="headline-row">
         <span class="badge sev-high">high</span>
         <span class="app-name">Veeam-Backup-06</span>
-        <span class="app-perm">Mail.Read</span>
+        <span class="perm-tag">Mail.Read</span>
+        <span class="path-count">1 escalation path</span>
       </div>
-      <div class="app-detail">Holds Mail.Read tenant-wide</div><div class="owner">
-      <div class="owner-head">owned by Pablo Delgado
-        <span class="owner-note">&mdash; 1 escalation path</span></div>
-      <div class="path"><span class="step">Pablo Delgado</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div>
-    </div></div><div class="card sev-high"><div class="card-app">
+      <div class="consequence">Holds Mail.Read tenant-wide</div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Pablo Delgado</div><div class="path"><span class="step">Pablo Delgado</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
+    </div><div class="card sev-high">
+      <div class="headline-row">
         <span class="badge sev-high">high</span>
         <span class="app-name">Veeam-Backup-01</span>
-        <span class="app-perm">Mail.Read</span>
+        <span class="perm-tag">Mail.Read</span>
+        <span class="path-count">1 escalation path</span>
       </div>
-      <div class="app-detail">Holds Mail.Read tenant-wide</div><div class="owner">
-      <div class="owner-head">owned by Omar Delgado
-        <span class="owner-note">&mdash; 1 escalation path</span></div>
-      <div class="path"><span class="step">Omar Delgado</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div>
-    </div></div><div class="card sev-high"><div class="card-app">
+      <div class="consequence">Holds Mail.Read tenant-wide</div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Omar Delgado</div><div class="path"><span class="step">Omar Delgado</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
+    </div><div class="card sev-high">
+      <div class="headline-row">
         <span class="badge sev-high">high</span>
         <span class="app-name">Veeam-Backup-04</span>
-        <span class="app-perm">Mail.Read</span>
+        <span class="perm-tag">Mail.Read</span>
+        <span class="path-count">1 escalation path</span>
       </div>
-      <div class="app-detail">Holds Mail.Read tenant-wide</div><div class="owner">
-      <div class="owner-head">owned by Pablo Banerjee
-        <span class="owner-note">&mdash; 1 escalation path</span></div>
-      <div class="path"><span class="step">Pablo Banerjee</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div>
-    </div></div><div class="card sev-high"><div class="card-app">
+      <div class="consequence">Holds Mail.Read tenant-wide</div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Pablo Banerjee</div><div class="path"><span class="step">Pablo Banerjee</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
+    </div><div class="card sev-high">
+      <div class="headline-row">
         <span class="badge sev-high">high</span>
         <span class="app-name">Veeam-Backup-02</span>
-        <span class="app-perm">Mail.Read</span>
+        <span class="perm-tag">Mail.Read</span>
+        <span class="path-count">1 escalation path</span>
       </div>
-      <div class="app-detail">Holds Mail.Read tenant-wide</div><div class="owner">
-      <div class="owner-head">owned by Omar Eze
-        <span class="owner-note">&mdash; 1 escalation path</span></div>
-      <div class="path"><span class="step">Omar Eze</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div>
-    </div></div>
+      <div class="consequence">Holds Mail.Read tenant-wide</div>
+      <div class="chain-zone"><div class="owner"><div class="owner-head">owned by Omar Eze</div><div class="path"><span class="step">Omar Eze</span><span class="arrow">&rarr;</span><span class="step">SG-Application-Owners</span><span class="arrow">&rarr;</span><span class="step role">Application Administrator</span></div></div></div>
+    </div>
 
 <h2 class="section">Over-privileged and unowned</h2>
-<div class="card sev-high"><div class="card-app">
+<div class="card unowned sev-high">
+      <div class="headline-row">
         <span class="badge sev-high">high</span>
         <span class="app-name">LegacyDocSync-01</span>
-        <span class="app-perm">Files.Read.All</span>
+        <span class="perm-tag">Files.Read.All</span>
+        <span class="path-count">no owner</span>
       </div>
-      <div class="app-detail">Holds Files.Read.All tenant-wide</div><div class="unowned-note">No owner assigned &mdash; over-privileged and unaccountable.</div></div><div class="card sev-high"><div class="card-app">
+      <div class="consequence">Over-privileged and unaccountable &mdash; no owner assigned.</div>
+    </div><div class="card unowned sev-high">
+      <div class="headline-row">
         <span class="badge sev-high">high</span>
         <span class="app-name">LegacyDocSync-02</span>
-        <span class="app-perm">Files.Read.All</span>
+        <span class="perm-tag">Files.Read.All</span>
+        <span class="path-count">no owner</span>
       </div>
-      <div class="app-detail">Holds Files.Read.All tenant-wide</div><div class="unowned-note">No owner assigned &mdash; over-privileged and unaccountable.</div></div><div class="card sev-high"><div class="card-app">
+      <div class="consequence">Over-privileged and unaccountable &mdash; no owner assigned.</div>
+    </div><div class="card unowned sev-high">
+      <div class="headline-row">
         <span class="badge sev-high">high</span>
         <span class="app-name">LegacyDocSync-05</span>
-        <span class="app-perm">Files.Read.All</span>
+        <span class="perm-tag">Files.Read.All</span>
+        <span class="path-count">no owner</span>
       </div>
-      <div class="app-detail">Holds Files.Read.All tenant-wide</div><div class="unowned-note">No owner assigned &mdash; over-privileged and unaccountable.</div></div><div class="card sev-high"><div class="card-app">
+      <div class="consequence">Over-privileged and unaccountable &mdash; no owner assigned.</div>
+    </div><div class="card unowned sev-high">
+      <div class="headline-row">
         <span class="badge sev-high">high</span>
         <span class="app-name">LegacyDocSync-03</span>
-        <span class="app-perm">Files.Read.All</span>
+        <span class="perm-tag">Files.Read.All</span>
+        <span class="path-count">no owner</span>
       </div>
-      <div class="app-detail">Holds Files.Read.All tenant-wide</div><div class="unowned-note">No owner assigned &mdash; over-privileged and unaccountable.</div></div><div class="card sev-high"><div class="card-app">
+      <div class="consequence">Over-privileged and unaccountable &mdash; no owner assigned.</div>
+    </div><div class="card unowned sev-high">
+      <div class="headline-row">
         <span class="badge sev-high">high</span>
         <span class="app-name">SC300-Lab-App1.1</span>
-        <span class="app-perm">Mail.Read</span>
+        <span class="perm-tag">Mail.Read</span>
+        <span class="path-count">no owner</span>
       </div>
-      <div class="app-detail">Holds Mail.Read tenant-wide</div><div class="unowned-note">No owner assigned &mdash; over-privileged and unaccountable.</div></div><div class="card sev-high"><div class="card-app">
+      <div class="consequence">Over-privileged and unaccountable &mdash; no owner assigned.</div>
+    </div><div class="card unowned sev-high">
+      <div class="headline-row">
         <span class="badge sev-high">high</span>
         <span class="app-name">LegacyDocSync-04</span>
-        <span class="app-perm">Files.Read.All</span>
+        <span class="perm-tag">Files.Read.All</span>
+        <span class="path-count">no owner</span>
       </div>
-      <div class="app-detail">Holds Files.Read.All tenant-wide</div><div class="unowned-note">No owner assigned &mdash; over-privileged and unaccountable.</div></div>
+      <div class="consequence">Over-privileged and unaccountable &mdash; no owner assigned.</div>
+    </div>
 
 </main></body></html>
