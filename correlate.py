@@ -84,6 +84,30 @@ def owned_privileged_apps():
     return results
 
 
+def ownerless_privileged_apps():
+    """Over-privileged apps with no owner at all.
+
+    An over-privileged app that nobody owns is its own risk: no
+    accountable party, harder to govern, and a standing escalation
+    target. The workload scanner flags the privilege and the missing
+    owner separately; the orchestrator surfaces the dangerous
+    combination.
+    """
+    q = _query()
+    results = []
+    for f in q.all(tool="workload-identity"):
+        if f.rule not in ("tier0-application-permission", "broad-data-permission"):
+            continue
+        if f.evidence.get("owner_ids"):
+            continue
+        results.append({"app": f.subject, "app_finding": f})
+    results.sort(
+        key=lambda r: SEVERITY_RANK.get(r["app_finding"].severity, 0),
+        reverse=True,
+    )
+    return results
+
+
 if __name__ == "__main__":
     print("=== Subject overlap (flagged by multiple tools) ===")
     overlaps = correlated_subjects()
@@ -107,3 +131,7 @@ if __name__ == "__main__":
                 print(f"      owned by {ro['owner_name']}: {len(paths)} attack-path finding(s)")
                 for pf in paths[:2]:
                     print(f"        - {pf.title}")
+
+    from report import render_report
+    _out = render_report(owned_privileged_apps(), ownerless_privileged_apps())
+    print(f"\nReport written to {_out}")
