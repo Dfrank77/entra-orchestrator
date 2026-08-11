@@ -2,7 +2,7 @@
 
 > ## 🚧 Under Active Development
 >
-> Core correlation works. HTML reporting and live scan orchestration are in progress.
+> Core correlation and HTML reporting work. Live scan orchestration (one command to run all three scanners) is next.
 
 Cross-tool correlation for the Entra ID security suite. Reads findings from three independent scanners and surfaces risks that no single tool can see on its own.
 
