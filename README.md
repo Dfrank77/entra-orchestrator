@@ -64,3 +64,11 @@ On Python 3.14, if the editable install is skipped (a known setuptools .pth issu
 - Live orchestration: run all three scanners and correlate from a single command.
 - Remediation guidance per finding.
 - Additional correlation types (expiring-credential + over-privileged, PIM-eligible ownership).
+
+## Author
+
+**Darius Frank** — IAM & Cloud Security
+
+- Portfolio: [dfrank-iam.com](https://dfrank-iam.com)
+- GitHub: [@Dfrank77](https://github.com/Dfrank77)
+- LinkedIn: [Darius Frank](https://www.linkedin.com/in/darius-frank-24a895192/)
