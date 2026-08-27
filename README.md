@@ -24,6 +24,8 @@ All three scanners write findings in a shared schema ([entra-security-report](ht
 
 **Ownership join** — for every over-privileged application, resolve its owners and check whether any owner is a user the attack-path scanner flags as having a privilege escalation path. Where they match, the dangerous app is owned by a compromisable identity: a real attack chain that neither tool reports alone.
 
+**Ownership confidence** — each correlated finding is tagged with an ownership confidence score based on evidence from both Microsoft Graph and Azure ARM RBAC role assignments. A green **RBAC verified** tag means the registered owner is confirmed by an Azure RBAC role assignment. A yellow **Graph only** tag means ownership comes from Graph alone and may be stale. This surfaces which ownership claims are backed by real Azure access and which ones deserve investigation.
+
 **Over-privileged and unowned** — over-privileged applications with no owner at all. No accountable party, harder to govern, and a standing escalation target. The workload scanner flags the privilege and the missing owner separately; the orchestrator surfaces the dangerous combination.
 
 ## Example output
@@ -64,6 +66,11 @@ On Python 3.14, if the editable install is skipped (a known setuptools .pth issu
 - Live orchestration: run all three scanners and correlate from a single command.
 - Remediation guidance per finding.
 - Additional correlation types (expiring-credential + over-privileged, PIM-eligible ownership).
+- Deeper ownership evidence signals (sign-in activity, audit logs, resource metadata).
+
+## Acknowledgments
+
+Ownership confidence scoring was inspired by feedback from [Konrad Zawadka](https://www.linkedin.com/in/konrad-zawadka/) and his [OwnerLensLite](https://github.com/kodevza) approach to evidence-based ownership — treating Graph ownership as one signal among many rather than the single source of truth.
 
 ## Author
 
