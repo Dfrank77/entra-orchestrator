@@ -119,6 +119,24 @@ h2.section {
 .card.unowned .consequence { margin-top: .2rem; font-style: italic; }
 
 .empty { color: var(--muted); padding: 1.25rem; }
+
+/* ownership confidence */
+.ownership-tag {
+  font-size: .68rem; font-weight: 600; letter-spacing: .03em;
+  padding: .15rem .45rem; border-radius: 5px; white-space: nowrap;
+}
+.ownership-tag.has-rbac {
+  background: #dcfce7; color: #166534; border: 1px solid #bbf7d0;
+}
+.ownership-tag.graph-only {
+  background: #fef9c3; color: #854d0e; border: 1px solid #fde68a;
+}
+.ownership-tag.none {
+  background: #fee2e2; color: #991b1b; border: 1px solid #fecaca;
+}
+.ownership-tag.unknown {
+  background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0;
+}
 """
 
 
@@ -160,11 +178,14 @@ def _chain_card(result):
     conseq = escape(_consequence(f.detail, f.title))
     total_paths = sum(len(o["attack_findings"]) for o in result["risky_owners"])
     owners = "".join(_owner_html(o) for o in result["risky_owners"])
+    confidence = result.get("ownership_confidence", "unknown")
+    conf_label = {"has-rbac": "RBAC verified", "graph-only": "Graph only", "none": "no owner", "unknown": "unknown"}.get(confidence, confidence)
     return f'''<div class="card {sc}">
       <div class="headline-row">
         <span class="badge {sc}">{escape(f.severity)}</span>
         <span class="app-name">{escape(result["app"].display_name)}</span>
         <span class="perm-tag">{perm}</span>
+        <span class="ownership-tag {confidence}">{conf_label}</span>
         <span class="path-count">{total_paths} escalation path{"s" if total_paths != 1 else ""}</span>
       </div>
       <div class="consequence">{conseq}</div>
@@ -207,6 +228,8 @@ def render_report(chains, unowned, tenant_id="", output_path="orchestrator_repor
       <span class="item"><span class="dot high"></span> high</span>
       <span class="item"><span class="arrow">&rarr;</span> escalation step (user &rarr; group &rarr; role)</span>
       <span class="item">"owned by" = app owner who can be compromised</span>
+      <span class="item"><span class="ownership-tag has-rbac" style="font-size:.65rem">RBAC verified</span> owner confirmed by Azure RBAC</span>
+      <span class="item"><span class="ownership-tag graph-only" style="font-size:.65rem">Graph only</span> ownership from Graph only &mdash; may be stale</span>
     </div>'''
 
     chains_body = "".join(_chain_card(r) for r in chains) or '<div class="empty">No compromisable-identity chains found.</div>'
