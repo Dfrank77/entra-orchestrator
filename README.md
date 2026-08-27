@@ -72,6 +72,8 @@ On Python 3.14, if the editable install is skipped (a known setuptools .pth issu
 
 Ownership confidence scoring was inspired by feedback from [Konrad Zawadka](https://www.linkedin.com/in/konrad-zawadka/) and his [OwnerLensLite](https://github.com/kodevza) approach to evidence-based ownership — treating Graph ownership as one signal among many rather than the single source of truth.
 
+Built with [Claude Code](https://claude.ai/code) (Anthropic).
+
 ## Author
 
 **Darius Frank** — IAM & Cloud Security
