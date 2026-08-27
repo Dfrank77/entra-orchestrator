@@ -74,6 +74,7 @@ def owned_privileged_apps():
                 "app": f.subject,
                 "app_finding": f,
                 "risky_owners": risky_owners,
+                "ownership_confidence": f.evidence.get("ownership_confidence", "unknown"),
             })
 
     # Worst first: critical apps with the most risky owners
@@ -125,7 +126,8 @@ if __name__ == "__main__":
     else:
         for r in owned:
             app = r["app"]
-            print(f"  {app.display_name} [{r['app_finding'].severity}] - {r['app_finding'].title}")
+            confidence = r.get("ownership_confidence", "unknown")
+            print(f"  {app.display_name} [{r['app_finding'].severity}] - {r['app_finding'].title}  (ownership: {confidence})")
             for ro in r["risky_owners"]:
                 paths = ro["attack_findings"]
                 print(f"      owned by {ro['owner_name']}: {len(paths)} attack-path finding(s)")
