@@ -28,7 +28,7 @@ All three scanners write findings in a shared schema ([entra-security-report](ht
 
 The report renders each correlation as a visual chain - the dangerous app, its risky owner, and the owner's escalation path shown as steps - so the relationship is obvious at a glance.
 
-![Orchestrator correlation report](docs/Entra_Orchestrator_Report.jpeg)
+![Unified security report](docs/Entra_Security_Suite.jpeg)
 
 ## Setup
 
