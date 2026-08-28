@@ -30,15 +30,99 @@ The report renders each correlation as a visual chain - the dangerous app, its r
 
 ![Unified security report](docs/Entra_Security_Suite.jpeg)
 
+## Prerequisites
+
+### App registration
+
+Create a single app registration in Entra ID that all three scanners share.
+
+1. Go to **Microsoft Entra ID > App registrations > New registration**.
+2. Name it whatever you want (e.g. "Entra Security Scanner").
+3. Under **Authentication**, add a platform: **Mobile and desktop applications**, then add the redirect URI `http://localhost`. This is needed for the attack path scanner's interactive login.
+4. Under **Certificates & secrets**, create a client secret. Copy the value immediately (you cannot see it again).
+5. Under **API permissions**, add the following **Microsoft Graph application** permissions:
+   - `Application.Read.All`
+   - `Directory.Read.All`
+   - `AuditLog.Read.All`
+   - `RoleManagement.Read.All`
+6. Click **Grant admin consent** for your tenant.
+
+### RBAC Reader role (optional, recommended)
+
+For ownership confidence scoring (distinguishing RBAC-verified owners from Graph-only owners), assign the app the **Reader** role on each Azure subscription you want to scan. This is an Azure RBAC role assignment, not a Graph API permission.
+
+1. Go to **Subscriptions** in the Azure portal.
+2. Select a subscription.
+3. Go to **Access control (IAM) > Add role assignment**.
+4. Select the **Reader** role.
+5. Under **Members**, choose **User, group, or service principal**, click **Select members**, and search for your app registration name.
+6. Save. Repeat for each subscription.
+
+Without this, the scanner still works but all ownership confidence will show as "graph-only".
+
+### Azure CLI (for Zero Trust scanner)
+
+The ZT policy engine authenticates with Azure CLI. Install the [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) and run `az login` before starting the orchestrator.
+
 ## Setup
 
-The orchestrator depends on the shared entra_security_report library, a local sibling repo rather than a PyPI package.
+Clone all four repos as siblings in the same directory:
 
     git clone https://github.com/Dfrank77/entra-security-report.git
+    git clone https://github.com/Dfrank77/entra-workload-identity-scanner.git
+    git clone https://github.com/Dfrank77/entra-attack-path-visualizer.git
+    git clone https://github.com/Dfrank77/entra-zt-policy-engine.git
     git clone https://github.com/Dfrank77/entra-orchestrator.git
-    cd entra-orchestrator
+
+Set up each scanner's virtual environment and install dependencies:
+
+    # Shared library
+    cd entra-security-report
+    # (no venv needed, installed as editable dependency in each scanner)
+
+    # Workload Identity Scanner
+    cd ../entra-workload-identity-scanner
+    python3 -m venv .venv && source .venv/bin/activate
+    pip install -r requirements.txt
+    pip install -e ../entra-security-report
+    deactivate
+
+    # Attack Path Visualizer
+    cd ../entra-attack-path-visualizer
+    python3 -m venv venv && source venv/bin/activate
+    pip install -r requirements.txt
+    pip install -e ../entra-security-report
+    deactivate
+
+    # Zero Trust Policy Engine
+    cd ../entra-zt-policy-engine
+    python3 -m venv venv && source venv/bin/activate
+    pip install -r audit/requirements.txt
+    pip install -e ../entra-security-report
+    deactivate
+
+    # Orchestrator
+    cd ../entra-orchestrator
     python3 -m venv venv && source venv/bin/activate
     pip install -e ../entra-security-report
+
+### Environment files
+
+Each scanner needs a `.env` file with your app registration credentials.
+
+**Workload scanner** (`entra-workload-identity-scanner/.env`):
+
+    TENANT_ID=your-tenant-id
+    CLIENT_ID=your-client-id
+    CLIENT_SECRET=your-client-secret
+
+**Attack path scanner** (`entra-attack-path-visualizer/.env`):
+
+    CLIENT_ID=your-client-id
+
+**ZT policy engine** (`entra-zt-policy-engine/.env`):
+
+    TENANT_ID=your-tenant-id
 
 On Python 3.14, if the editable install is skipped (a known setuptools .pth issue), point the venv at the source directly instead:
 

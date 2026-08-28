@@ -5,3 +5,4 @@ __pycache__/
 .env
 .findings/
 .DS_Store
+*.html
