@@ -1,9 +1,5 @@
 # entra-orchestrator
 
-> ## 🚧 Under Active Development
->
-> Core correlation and HTML reporting work. Live scan orchestration (one command to run all three scanners) is next.
-
 Cross-tool correlation for the Entra ID security suite. Reads findings from three independent scanners and surfaces risks that no single tool can see on its own.
 
 ## Why
@@ -22,15 +18,15 @@ The orchestrator answers it by joining findings across tools.
 
 All three scanners write findings in a shared schema ([entra-security-report](https://github.com/Dfrank77/entra-security-report)) to a common store. The orchestrator reads that store and runs two correlations:
 
-**Ownership join** — for every over-privileged application, resolve its owners and check whether any owner is a user the attack-path scanner flags as having a privilege escalation path. Where they match, the dangerous app is owned by a compromisable identity: a real attack chain that neither tool reports alone.
+**Ownership join** - for every over-privileged application, resolve its owners and check whether any owner is a user the attack-path scanner flags as having a privilege escalation path. Where they match, the dangerous app is owned by a compromisable identity: a real attack chain that neither tool reports alone.
 
-**Ownership confidence** — each correlated finding is tagged with an ownership confidence score based on evidence from both Microsoft Graph and Azure ARM RBAC role assignments. A green **RBAC verified** tag means the registered owner is confirmed by an Azure RBAC role assignment. A yellow **Graph only** tag means ownership comes from Graph alone and may be stale. This surfaces which ownership claims are backed by real Azure access and which ones deserve investigation.
+**Ownership confidence** - each correlated finding is tagged with an ownership confidence score based on evidence from both Microsoft Graph and Azure ARM RBAC role assignments. A green **RBAC verified** tag means the registered owner is confirmed by an Azure RBAC role assignment. A yellow **Graph only** tag means ownership comes from Graph alone and may be stale. This surfaces which ownership claims are backed by real Azure access and which ones deserve investigation.
 
-**Over-privileged and unowned** — over-privileged applications with no owner at all. No accountable party, harder to govern, and a standing escalation target. The workload scanner flags the privilege and the missing owner separately; the orchestrator surfaces the dangerous combination.
+**Over-privileged and unowned** - over-privileged applications with no owner at all. No accountable party, harder to govern, and a standing escalation target. The workload scanner flags the privilege and the missing owner separately; the orchestrator surfaces the dangerous combination.
 
 ## Example output
 
-The report renders each correlation as a visual chain — the dangerous app, its risky owner, and the owner's escalation path shown as steps — so the relationship is obvious at a glance.
+The report renders each correlation as a visual chain - the dangerous app, its risky owner, and the owner's escalation path shown as steps - so the relationship is obvious at a glance.
 
 ![Orchestrator correlation report](docs/Entra_Orchestrator_Report.jpeg)
 
@@ -50,33 +46,42 @@ On Python 3.14, if the editable install is skipped (a known setuptools .pth issu
 
 ## Usage
 
-1. Point every tool at one shared findings store:
+**Run everything at once:**
 
-       export ENTRA_FINDINGS_DIR="$HOME/.entra-findings"
+    cd entra-orchestrator
+    source venv/bin/activate
+    python orchestrate.py
 
-2. Run each of the three scanners (with that variable set) so their findings land in the shared store.
+This runs all three scanners sequentially (each handles its own authentication), correlates the findings, and writes `orchestrator_report.html`.
 
-3. Run the correlation and open the report:
+The workload scanner authenticates with a client secret. The attack path scanner opens a browser window for interactive login. The ZT policy engine uses `az login` (run it before the scan if you haven't already).
 
-       python correlate.py
-       open orchestrator_report.html
+**Options:**
+
+    python orchestrate.py --only workload attack-path   # run specific scanners
+    python orchestrate.py --skip zt-policy              # skip one
+    python orchestrate.py --no-correlate                 # scan only, skip correlation
+
+**Run correlation only** (if scanners were run separately):
+
+    python correlate.py
+    open orchestrator_report.html
 
 ## Roadmap
 
-- Live orchestration: run all three scanners and correlate from a single command.
 - Remediation guidance per finding.
 - Additional correlation types (expiring-credential + over-privileged, PIM-eligible ownership).
 - Deeper ownership evidence signals (sign-in activity, audit logs, resource metadata).
 
 ## Acknowledgments
 
-Ownership confidence scoring was inspired by feedback from [Konrad Zawadka](https://www.linkedin.com/in/konrad-zawadka/) and his [OwnerLensLite](https://github.com/kodevza) approach to evidence-based ownership — treating Graph ownership as one signal among many rather than the single source of truth.
+Ownership confidence scoring was inspired by feedback from [Konrad Zawadka](https://www.linkedin.com/in/konrad-zawadka/) and his [OwnerLensLite](https://github.com/kodevza) approach to evidence-based ownership - treating Graph ownership as one signal among many rather than the single source of truth.
 
 Built with [Claude Code](https://claude.ai/code) (Anthropic).
 
 ## Author
 
-**Darius Frank** — IAM & Cloud Security
+**Darius Frank** - IAM & Cloud Security
 
 - Portfolio: [dfrank-iam.com](https://dfrank-iam.com)
 - GitHub: [@Dfrank77](https://github.com/Dfrank77)
