@@ -130,6 +130,8 @@ On Python 3.14, if the editable install is skipped (a known setuptools .pth issu
 
 ## Usage
 
+![Orchestrator demo](docs/orchestrator-demo.gif)
+
 **Run everything at once:**
 
     cd entra-orchestrator
