@@ -4,6 +4,8 @@ Cross-tool correlation for the Entra ID security suite. Reads findings from thre
 
 <img src="docs/orchestrator-demo.gif" width="600" alt="Orchestrator demo">
 
+**Output:**
+
 ![Unified security report](docs/Entra_Security_Suite.jpeg)
 
 ## Why
