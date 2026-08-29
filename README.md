@@ -2,6 +2,8 @@
 
 Cross-tool correlation for the Entra ID security suite. Reads findings from three independent scanners and surfaces risks that no single tool can see on its own.
 
+<img src="docs/orchestrator-demo.gif" width="600" alt="Orchestrator demo">
+
 ## Why
 
 Each scanner in the suite sees one dimension of tenant risk:
@@ -129,8 +131,6 @@ On Python 3.14, if the editable install is skipped (a known setuptools .pth issu
     export PYTHONPATH="/absolute/path/to/entra-security-report/src:$PYTHONPATH"
 
 ## Usage
-
-![Orchestrator demo](docs/orchestrator-demo.gif)
 
 **Run everything at once:**
 
