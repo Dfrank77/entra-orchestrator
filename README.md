@@ -4,6 +4,8 @@ Cross-tool correlation for the Entra ID security suite. Reads findings from thre
 
 <img src="docs/orchestrator-demo.gif" width="600" alt="Orchestrator demo">
 
+![Unified security report](docs/Entra_Security_Suite.jpeg)
+
 ## Why
 
 Each scanner in the suite sees one dimension of tenant risk:
@@ -25,12 +27,6 @@ All three scanners write findings in a shared schema ([entra-security-report](ht
 **Ownership confidence** - each correlated finding is tagged with an ownership confidence score based on evidence from both Microsoft Graph and Azure ARM RBAC role assignments. A green **RBAC verified** tag means the registered owner is confirmed by an Azure RBAC role assignment. A yellow **Graph only** tag means ownership comes from Graph alone and may be stale. This surfaces which ownership claims are backed by real Azure access and which ones deserve investigation.
 
 **Over-privileged and unowned** - over-privileged applications with no owner at all. No accountable party, harder to govern, and a standing escalation target. The workload scanner flags the privilege and the missing owner separately; the orchestrator surfaces the dangerous combination.
-
-## Example output
-
-The report renders each correlation as a visual chain - the dangerous app, its risky owner, and the owner's escalation path shown as steps - so the relationship is obvious at a glance.
-
-![Unified security report](docs/Entra_Security_Suite.jpeg)
 
 ## Prerequisites
 
